@@ -1,5 +1,6 @@
 package com.MposGlobal.Inventario_JuanNavarro.Entidades;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -22,5 +23,6 @@ public class Tag {
     private String nombre;
 
     @ManyToMany(mappedBy = "tags")
+    @JsonIgnore
     private Set<Producto> productos = new HashSet<>();
 }
