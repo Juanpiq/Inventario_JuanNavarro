@@ -1,4 +1,4 @@
-package com.MposGlobal.Inventario_JuanNAvarro;
+package com.MposGlobal.Inventario_JuanNavarro;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
