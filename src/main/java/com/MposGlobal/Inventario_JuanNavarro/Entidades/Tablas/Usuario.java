@@ -1,4 +1,4 @@
-package com.MposGlobal.Inventario_JuanNavarro.Entidades;
+package com.MposGlobal.Inventario_JuanNavarro.Entidades.Tablas;
 
 import jakarta.persistence.*;
 import org.springframework.security.core.GrantedAuthority;

@@ -1,4 +1,4 @@
-package com.MposGlobal.Inventario_JuanNavarro.Entidades;
+package com.MposGlobal.Inventario_JuanNavarro.Entidades.Tablas;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
