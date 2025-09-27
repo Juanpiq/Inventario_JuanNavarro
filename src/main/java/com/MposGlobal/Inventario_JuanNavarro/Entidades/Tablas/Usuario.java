@@ -36,6 +36,7 @@ public class Usuario implements UserDetails {
     @Column(name = "fecha_ultimo_ingreso")
     private LocalDateTime fechaUltimoIngreso;
 
+    @Enumerated(EnumType.STRING)
     @Column(name = "nivel_acceso", nullable = false, length = 20)
     private String nivelAcceso;
 
