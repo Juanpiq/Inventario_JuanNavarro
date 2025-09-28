@@ -1,5 +1,10 @@
 package com.MposGlobal.Inventario_JuanNavarro.InterfacesServicios;
 
+import com.MposGlobal.Inventario_JuanNavarro.BusinessException;
+import com.MposGlobal.Inventario_JuanNavarro.Entidades.DTOs.Categoria.CategoriaActDTO;
+import com.MposGlobal.Inventario_JuanNavarro.Entidades.DTOs.Categoria.CategoriaCrearDTO;
+import com.MposGlobal.Inventario_JuanNavarro.Entidades.DTOs.Categoria.CategoriaRespDTO;
+import com.MposGlobal.Inventario_JuanNavarro.Entidades.DTOs.Producto.ProductoRespDTO;
 import com.MposGlobal.Inventario_JuanNavarro.Entidades.Tablas.Categoria;
 import com.MposGlobal.Inventario_JuanNavarro.Entidades.Tablas.Producto;
 
@@ -7,23 +12,23 @@ import java.util.List;
 
 public interface CategoriaInterfazServicio {
 
-    List<Categoria> listaCategorias();
+    List<CategoriaRespDTO> listarCategorias();
 
-    Categoria buscar(int id);
+    CategoriaRespDTO crearCategoria(CategoriaCrearDTO catdto) throws BusinessException;
 
-    Categoria buscar(String nombre);
+    CategoriaRespDTO buscarCategoria(int id) throws BusinessException;
 
-    List<Producto> productosCategoria(int id);
+    CategoriaRespDTO buscarCategoria(String nombre) throws BusinessException;
 
-    List<Producto> productosCategoria(String nombre);
+    List<ProductoRespDTO> listarProductosCategoria(int id) throws BusinessException;
 
-    Categoria desactivarCategoria(int id);
+    String desactivarCategoria(int id) throws BusinessException;
 
-    Categoria desactivarCategoria(String nombre);
+    String desactivarCategoria(String nombre) throws BusinessException;
 
-    Categoria activarCategoria(int id);
+    String activarCategoria(int id) throws BusinessException;
 
-    Categoria activarCategoria(String nombre);
+    String activarCategoria(String nombre) throws BusinessException;
 
-    Categoria modificarCategoria(Categoria categoria);
+    String modificarCategoria(CategoriaActDTO categoria) throws BusinessException;
 }

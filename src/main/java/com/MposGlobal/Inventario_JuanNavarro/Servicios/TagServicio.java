@@ -1,18 +1,20 @@
 package com.MposGlobal.Inventario_JuanNavarro.Servicios;
 
 import com.MposGlobal.Inventario_JuanNavarro.BusinessException;
+import com.MposGlobal.Inventario_JuanNavarro.Entidades.DTOs.Tag.TagActDTO;
 import com.MposGlobal.Inventario_JuanNavarro.Entidades.DTOs.Tag.TagRespDTO;
 import com.MposGlobal.Inventario_JuanNavarro.Entidades.Tablas.Producto;
 import com.MposGlobal.Inventario_JuanNavarro.Entidades.Tablas.Tag;
 import com.MposGlobal.Inventario_JuanNavarro.InterfacesServicios.TagInterfazServicio;
 import com.MposGlobal.Inventario_JuanNavarro.Repositorios.TagRepositorio;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
 
 import static org.springframework.data.jpa.domain.AbstractPersistable_.id;
-
+@Service
 public class TagServicio implements TagInterfazServicio {
 
     @Autowired
@@ -28,14 +30,14 @@ public class TagServicio implements TagInterfazServicio {
 
 
     @Override
-    public Tag crearTag(String nombre) throws BusinessException {
+    public TagRespDTO crearTag(String nombre) throws BusinessException {
         Tag tag = tagRepositorio.findByNombreIgnoreCase(nombre);
         if(tag == null){
             Tag t = new Tag();
             t.setNombre(nombre);
             t = this.tagRepositorio.save(t);
-            return t;
-        } else throw new BusinessException("El tag " + tag.getNombre() + " ya existe.", 406);
+            return mapToResponseDTO(t);
+        } else throw new BusinessException("El tag " + tag.getNombre() + " ya existe.", 409);
     }
 
     @Override
@@ -55,7 +57,7 @@ public class TagServicio implements TagInterfazServicio {
     }
 
     @Override
-    public String modificarTag(TagRespDTO tagdto) throws BusinessException {
+    public String modificarTag(TagActDTO tagdto) throws BusinessException {
         Optional<Tag> tag = this.tagRepositorio.findById(tagdto.idTag());
         if(!tag.isEmpty()){
             Tag existente = this.tagRepositorio.findByNombreIgnoreCase(tagdto.nombre());
@@ -63,7 +65,7 @@ public class TagServicio implements TagInterfazServicio {
                 this.tagRepositorio.save(tag.get());
                 return "modificación del tag exitosa";
             }
-            else throw new BusinessException("El tag con nombre " + existente.getNombre() + " ya existe.", 406);
+            else throw new BusinessException("El tag con nombre " + existente.getNombre() + " ya existe.", 409);
         } else throw new BusinessException("El tag con id " + tagdto.idTag() + " no existe.", 404);
     }
 

@@ -1,6 +1,8 @@
 package com.MposGlobal.Inventario_JuanNavarro.Controladores;
 
 import com.MposGlobal.Inventario_JuanNavarro.BusinessException;
+import com.MposGlobal.Inventario_JuanNavarro.Entidades.DTOs.Tag.TagActDTO;
+import com.MposGlobal.Inventario_JuanNavarro.Entidades.DTOs.Tag.TagCrearDTO;
 import com.MposGlobal.Inventario_JuanNavarro.Entidades.DTOs.Tag.TagRespDTO;
 import com.MposGlobal.Inventario_JuanNavarro.Entidades.Tablas.Tag;
 import com.MposGlobal.Inventario_JuanNavarro.Servicios.TagServicio;
@@ -53,10 +55,22 @@ public class TagControlador {
 
     //crear un nuevo tag
     @PostMapping("/crear")
-    public ResponseEntity<?> crearTag(Tag tag) throws BusinessException{
+    public ResponseEntity<?> crearTag(TagCrearDTO tag) throws BusinessException{
         try{
-            tag = this.tagServicio.crearTag(tag.getNombre());
+            TagRespDTO tagdto = this.tagServicio.crearTag(tag.nombre());
             return ResponseEntity.status(HttpStatus.CREATED).body(tag);
+        }catch(BusinessException be){
+            return ResponseEntity
+                    .status(be.getStatus())
+                    .body(be.getMessage());
+        }
+    }
+
+    //modificar o actualizar tags ya existentes
+    @PutMapping("/modificar")
+    public ResponseEntity<?> actualizarTag(TagActDTO tagdto) throws BusinessException{
+        try{
+            return ResponseEntity.status(HttpStatus.ACCEPTED).body(this.tagServicio.modificarTag(tagdto));
         }catch(BusinessException be){
             return ResponseEntity
                     .status(be.getStatus())
