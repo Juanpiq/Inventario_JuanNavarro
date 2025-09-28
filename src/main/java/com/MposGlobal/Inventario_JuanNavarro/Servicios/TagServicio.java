@@ -13,7 +13,6 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Optional;
 
-import static org.springframework.data.jpa.domain.AbstractPersistable_.id;
 @Service
 public class TagServicio implements TagInterfazServicio {
 
@@ -58,15 +57,25 @@ public class TagServicio implements TagInterfazServicio {
 
     @Override
     public String modificarTag(TagActDTO tagdto) throws BusinessException {
-        Optional<Tag> tag = this.tagRepositorio.findById(tagdto.idTag());
-        if(!tag.isEmpty()){
-            Tag existente = this.tagRepositorio.findByNombreIgnoreCase(tagdto.nombre());
-            if(existente == null) {
-                this.tagRepositorio.save(tag.get());
-                return "modificación del tag exitosa";
-            }
-            else throw new BusinessException("El tag con nombre " + existente.getNombre() + " ya existe.", 409);
-        } else throw new BusinessException("El tag con id " + tagdto.idTag() + " no existe.", 404);
+        // Buscar el tag por ID
+        Tag tag = this.tagRepositorio.findById(tagdto.idTag())
+                .orElseThrow(() -> new BusinessException("El tag con id " + tagdto.idTag() + " no existe.", 404));
+
+        // Verificar si existe otro tag con el mismo nombre
+        Tag existente = this.tagRepositorio.findByNombreIgnoreCase(tagdto.nombre());
+
+        if (existente != null && !(existente.getIdTag() == tagdto.idTag())) {
+            // Existe otro tag distinto con el mismo nombre
+            throw new BusinessException("El tag con nombre " + existente.getNombre() + " ya existe.", 409);
+        }
+
+        // Actualizar el nombre
+        tag.setNombre(tagdto.nombre());
+
+        // Guardar cambios
+        this.tagRepositorio.save(tag);
+
+        return "Modificación del tag exitosa";
     }
 
     //para mapear las listas

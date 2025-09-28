@@ -48,7 +48,7 @@ public class CategoriaControlador {
     }
 
     //obtener categoria por id
-    @GetMapping("/{id}")
+    @GetMapping("/id/{id}")
     public ResponseEntity<?> buscarCategoria(@PathVariable @Min(1) int id) throws BusinessException{
         try{
             CategoriaRespDTO catdto= this.categoriaServicio.buscarCategoria(id);
@@ -61,7 +61,7 @@ public class CategoriaControlador {
     }
 
     //obtener productos de la categoria por su id
-    @GetMapping("/{id}/productos")
+    @GetMapping("/id/{id}/productos")
     public ResponseEntity<?> listarProductosCategoria(@PathVariable @Min(1) int id) throws BusinessException{
         try{
             List<ProductoRespDTO> listProductos = this.categoriaServicio.listarProductosCategoria(id);
@@ -76,7 +76,7 @@ public class CategoriaControlador {
     }
 
     //obtener categoria por nombre
-    @GetMapping("/{nombre}")
+    @GetMapping("/nombre/{nombre}")
     public ResponseEntity<?> buscarCategoria(@PathVariable @NotBlank String nombre) throws BusinessException{
         try{
             CategoriaRespDTO catdto= this.categoriaServicio.buscarCategoria(nombre);
@@ -89,7 +89,7 @@ public class CategoriaControlador {
     }
 
     //modificar una categoria
-    @PutMapping("/modificar/{id}")
+    @PutMapping("/modificar")
     public ResponseEntity<?> actualizarCategoria(@Valid @RequestBody CategoriaActDTO catdto) throws BusinessException{
         try{
             return ResponseEntity.status(HttpStatus.OK).body(this.categoriaServicio.modificarCategoria(catdto));
@@ -101,7 +101,7 @@ public class CategoriaControlador {
     }
 
     //desactivar categoria por id (desactiva todos los productos asociados a esta)
-    @PutMapping("/{id}/desactivar")
+    @PutMapping("/id/{id}/desactivar")
     public ResponseEntity<?> desactivarCategoria(@PathVariable @Min(1) int id) throws BusinessException{
         try{
             return ResponseEntity.status(HttpStatus.OK).body(this.categoriaServicio.desactivarCategoria(id));
@@ -113,7 +113,7 @@ public class CategoriaControlador {
     }
 
     //desactivar categoria por nombre (desactiva todos los productos asociados a esta)
-    @PutMapping("/{nombre}/desactivar")
+    @PutMapping("/nombre/{nombre}/desactivar")
     public ResponseEntity<?> desactivarCategoria(@PathVariable @NotBlank String nombre) throws BusinessException{
         try{
             return ResponseEntity.status(HttpStatus.OK).body(this.categoriaServicio.desactivarCategoria(nombre));
@@ -125,7 +125,7 @@ public class CategoriaControlador {
     }
 
     //activar categoria por id (no activará los productos asociados)
-    @PutMapping("/{id}/activar")
+    @PutMapping("/id/{id}/activar")
     public ResponseEntity<?> activarCategoria(@PathVariable @Min(1) int id) throws BusinessException{
         try{
             return ResponseEntity.status(HttpStatus.OK).body(this.categoriaServicio.activarCategoria(id));
@@ -137,7 +137,7 @@ public class CategoriaControlador {
     }
 
     //activar categoria por nombre (desactiva todos los productos asociados a esta)
-    @PutMapping("/{nombre}/desactivar")
+    @PutMapping("/nombre/{nombre}/activar")
     public ResponseEntity<?> activarCategoria(@PathVariable @NotBlank String nombre) throws BusinessException{
         try{
             return ResponseEntity.status(HttpStatus.OK).body(this.categoriaServicio.activarCategoria(nombre));

@@ -48,7 +48,7 @@ public class CategoriaServicio implements CategoriaInterfazServicio {
 
     @Override
     public CategoriaRespDTO buscarCategoria(int id) throws BusinessException {
-        Categoria existente = this.categoriaRepositorio.findById(id);
+        Categoria existente = this.categoriaRepositorio.findByIdCategoria(id);
         if(existente != null){
             if(!existente.getActivo())
                 throw new BusinessException("La categoria con id " + id + " esta desactivada, activar primero si desea ver sus datos", 406);
@@ -68,7 +68,7 @@ public class CategoriaServicio implements CategoriaInterfazServicio {
 
     @Override
     public List<ProductoRespDTO> listarProductosCategoria(int id) throws BusinessException {
-        Categoria existente = this.categoriaRepositorio.findById(id);
+        Categoria existente = this.categoriaRepositorio.findByIdCategoria(id);
         if(existente != null){
             if(existente.getActivo()){
                 List<Producto> productosActivos = existente.getProductos().stream()
@@ -85,7 +85,7 @@ public class CategoriaServicio implements CategoriaInterfazServicio {
 
     @Override
     public String desactivarCategoria(int id) throws BusinessException {
-        Categoria existente = this.categoriaRepositorio.findById(id);
+        Categoria existente = this.categoriaRepositorio.findByIdCategoria(id);
         if(existente != null){
             if(existente.getActivo()) {
                 existente.setActivo(false);
@@ -131,7 +131,7 @@ public class CategoriaServicio implements CategoriaInterfazServicio {
 
     @Override
     public String activarCategoria(int id) throws BusinessException {
-        Categoria existente = this.categoriaRepositorio.findById(id);
+        Categoria existente = this.categoriaRepositorio.findByIdCategoria(id);
         if(existente != null){
             if(!existente.getActivo()) {
                 existente.setActivo(true);
@@ -159,9 +159,12 @@ public class CategoriaServicio implements CategoriaInterfazServicio {
 
     @Override
     public String modificarCategoria(CategoriaActDTO categoria) throws BusinessException {
-        Categoria existente = this.categoriaRepositorio.findById(categoria.id());
+        Categoria existente = this.categoriaRepositorio.findByIdCategoria(categoria.id());
 
         if(existente != null){
+            Categoria nombreExistente = this.categoriaRepositorio.findByNombreIgnoreCase(categoria.nombre());
+            if(existente.getIdCategoria() != nombreExistente.getIdCategoria())
+                throw new BusinessException("El producto " + nombreExistente.getNombre() + " ya existe", 409);
             existente.setNombre(categoria.nombre());
             existente.setFechaActualizacion(LocalDateTime.now());
             if(categoria.activo() != existente.getActivo()){

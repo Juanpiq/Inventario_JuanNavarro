@@ -6,5 +6,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 public interface CategoriaRepositorio extends JpaRepository<Categoria, Integer> {
 
     Categoria findByNombreIgnoreCase(String nombre);
-    Categoria findById(int id);
+    Categoria findByIdCategoria(int id);
 }

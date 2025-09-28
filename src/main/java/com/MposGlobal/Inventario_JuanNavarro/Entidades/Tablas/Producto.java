@@ -2,6 +2,7 @@ package com.MposGlobal.Inventario_JuanNavarro.Entidades.Tablas;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -22,6 +23,7 @@ public class Producto {
     private int idProducto;
 
     @Column(name = "nombre", nullable = false, length = 100)
+    @NotBlank
     private String nombre;
 
     @ManyToOne
