@@ -9,6 +9,7 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
@@ -19,29 +20,19 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 public class SecurityConfig {
 
     private final JwtFilter jwtFilter;
-    private final UsuarioServicio usuarioServicio;
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         return http
-                .csrf(csrf -> csrf.disable()) // Deshabilitamos CSRF, ya que usamos JWT
+                .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/auth/**").permitAll() // Login y creación inicial de usuario
-                        .requestMatchers(HttpMethod.POST, "/usuarios/**").hasRole("ADMIN") // Solo admin puede crear
-                        .requestMatchers(HttpMethod.PUT, "/usuarios/**").hasRole("ADMIN")  // Solo admin puede actualizar
-                        .requestMatchers(HttpMethod.PATCH, "/usuarios/**/activar").hasRole("ADMIN") // Activar/desactivar
-                        .requestMatchers(HttpMethod.PATCH, "/usuarios/**/desactivar").hasRole("ADMIN")
-                        .anyRequest().authenticated() // Todos los demás endpoints requieren token
+                        .requestMatchers("/auth/**").permitAll()
+                        .requestMatchers("/usuarios/**").hasRole("ADMIN")
+                        .anyRequest().authenticated()
                 )
-                .sessionManagement(sess -> sess.sessionCreationPolicy(SessionCreationPolicy.STATELESS)) // Stateless JWT
-                .userDetailsService(usuarioServicio)
+                .sessionManagement(sess -> sess.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class)
                 .build();
-    }
-
-    @Bean
-    public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder(); // Hasheo de passwords
     }
 
     @Bean
@@ -49,3 +40,6 @@ public class SecurityConfig {
         return authConfig.getAuthenticationManager();
     }
 }
+
+
+

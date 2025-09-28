@@ -24,7 +24,6 @@ public class UsuarioServicio implements UserDetailsService {
     private final UsuarioRepositorio usuarioRepositorio;
     private final PasswordEncoder passwordEncoder;
 
-    /*** UserDetailsService - método obligatorio para Spring Security ***/
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         Usuario usuario = usuarioRepositorio.findByNombreUsuarioIgnoreCase(username);
@@ -34,7 +33,7 @@ public class UsuarioServicio implements UserDetailsService {
         return usuario;
     }
 
-    /*** Crear usuario - solo admin ***/
+    //Crear usuario (solo puede el admin)
     public UsuarioRespDTO crearUsuario(UsuarioCrearDTO ucrearDto) throws BusinessException {
         Usuario uExistente = this.usuarioRepositorio.findByNombreUsuarioIgnoreCase(ucrearDto.nombreUsuario());
         if (uExistente == null) {
@@ -53,8 +52,8 @@ public class UsuarioServicio implements UserDetailsService {
         return mapToRespDTO(guardado);
     }
 
-    /*** Actualizar usuario - solo admin ***/
-    public UsuarioRespDTO actualizarUsuario(UsuarioActDTO uActdto) throws BusinessException {
+    //actualizar usuario (solo puede el admin)
+    public String actualizarUsuario(UsuarioActDTO uActdto) throws BusinessException {
         Usuario usuario = usuarioRepositorio.findById(uActdto.id())
                 .orElseThrow(() -> new BusinessException("Usuario no encontrado", 404));
 
@@ -72,10 +71,10 @@ public class UsuarioServicio implements UserDetailsService {
         }
 
         Usuario actualizado = usuarioRepositorio.save(usuario);
-        return mapToRespDTO(actualizado);
+        return "Usuario actualizado con éxito";
     }
 
-    /*** Soft delete - desactivar usuario ***/
+    //desactivar usuario por id (solo admin)
     public String desactivarUsuario(int id) throws BusinessException {
         Usuario usuario = usuarioRepositorio.findById(id)
                 .orElseThrow(() -> new BusinessException("Usuario no encontrado", 404));
@@ -89,7 +88,24 @@ public class UsuarioServicio implements UserDetailsService {
         return "Usuario desactivado correctamente";
     }
 
-    /*** Activar usuario ***/
+    //desactivar usuario por su username (solo admin)
+    public String desactivarUsuario(String nombreUsuario) throws BusinessException {
+        Usuario usuario = usuarioRepositorio.findByNombreUsuarioIgnoreCase(nombreUsuario);
+
+        if (usuario == null) {
+            throw new BusinessException("Usuario no encontrado", 404);
+        }
+
+        if (!usuario.isActivo()) {
+            throw new BusinessException("Usuario ya estaba desactivado", 406);
+        }
+
+        usuario.setActivo(false);
+        usuarioRepositorio.save(usuario);
+        return "Usuario desactivado correctamente";
+    }
+
+    //Activar usuario por id (solo admin)
     public String activarUsuario(int id) throws BusinessException {
         Usuario usuario = usuarioRepositorio.findById(id)
                 .orElseThrow(() -> new BusinessException("Usuario no encontrado", 404));
@@ -103,7 +119,24 @@ public class UsuarioServicio implements UserDetailsService {
         return "Usuario activado correctamente";
     }
 
-    /*** Listar usuarios activos ***/
+    //Activar usuario por username (solo admin)
+    public String activarUsuario(String nombreUsuario) throws BusinessException {
+        Usuario usuario = usuarioRepositorio.findByNombreUsuarioIgnoreCase(nombreUsuario);
+
+        if (usuario == null) {
+            throw new BusinessException("Usuario no encontrado", 404);
+        }
+
+        if (usuario.isActivo()) {
+            throw new BusinessException("Usuario ya estaba activo", 406);
+        }
+
+        usuario.setActivo(true);
+        usuarioRepositorio.save(usuario);
+        return "Usuario activado correctamente";
+    }
+
+    //Listar usuarios activos (solo admin)
     public List<UsuarioRespDTO> listarUsuarios() {
         return usuarioRepositorio.findAll()
                 .stream()
@@ -112,7 +145,7 @@ public class UsuarioServicio implements UserDetailsService {
                 .collect(Collectors.toList());
     }
 
-    /*** Buscar usuario activo por ID ***/
+    //Buscar usuario activo por ID (solo admin)
     public UsuarioRespDTO buscarUsuario(int id) throws BusinessException {
         Usuario usuario = usuarioRepositorio.findById(id)
                 .orElseThrow(() -> new BusinessException("Usuario no encontrado", 404));
@@ -124,7 +157,22 @@ public class UsuarioServicio implements UserDetailsService {
         return mapToRespDTO(usuario);
     }
 
-    /*** Mapper privado para response DTO ***/
+    //Buscar usuario activo por username (solo admin)
+    public UsuarioRespDTO buscarUsuario(String nombreUsuario) throws BusinessException {
+        Usuario usuario = usuarioRepositorio.findByNombreUsuarioIgnoreCase(nombreUsuario);
+
+        if (usuario == null) {
+            throw new BusinessException("Usuario no encontrado", 404);
+        }
+
+        if (!usuario.isActivo()) {
+            throw new BusinessException("Usuario desactivado", 406);
+        }
+
+        return mapToRespDTO(usuario);
+    }
+
+    //mapper para UsuarioRespDTO
     private UsuarioRespDTO mapToRespDTO(Usuario u) {
         return new UsuarioRespDTO(
                 u.getIdUsuario(),
