@@ -1,18 +1,20 @@
 package com.MposGlobal.Inventario_JuanNavarro.InterfacesServicios;
 
+import com.MposGlobal.Inventario_JuanNavarro.BusinessException;
+import com.MposGlobal.Inventario_JuanNavarro.Entidades.DTOs.Tag.TagRespDTO;
 import com.MposGlobal.Inventario_JuanNavarro.Entidades.Tablas.Tag;
 
 import java.util.List;
 
 public interface TagInterfazServicio {
 
-    List<Tag> listaTags();
+    List<TagRespDTO> listarTags();
 
-    Tag crearTag(Tag tag);
+    Tag crearTag(String nombre) throws BusinessException;
 
-    Tag buscarTag(int id);
+    TagRespDTO buscarTag(int id) throws BusinessException;
 
-    Tag buscarTag(String nombre);
+    TagRespDTO buscarTag(String nombre) throws BusinessException;
 
-    Tag modificarTag(Tag tag);
+    String modificarTag(TagRespDTO tag) throws BusinessException;
 }

@@ -6,5 +6,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface TagRepositorio extends JpaRepository<Tag, Integer> {
 
-    public Tag findByNombre(String nombre);
+    public Tag findByNombreIgnoreCase(String nombre);
 }
