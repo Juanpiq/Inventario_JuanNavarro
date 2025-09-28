@@ -6,7 +6,6 @@ import java.util.List;
 public record CategoriaRespDTO(
         int idCategoria,
         String nombre,
-        boolean activo,
         LocalDateTime fechaCreacion,
         LocalDateTime fechaActualizacion,
         List<String> productos

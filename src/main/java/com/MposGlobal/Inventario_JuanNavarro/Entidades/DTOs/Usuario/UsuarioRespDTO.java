@@ -7,7 +7,6 @@ public record UsuarioRespDTO(
         String nombreCompleto,
         String nombreUsuario,
         String nivelAcceso,
-        boolean activo,
         LocalDateTime fechaCreacion,
         LocalDateTime fechaUltimoIngreso
 ) {

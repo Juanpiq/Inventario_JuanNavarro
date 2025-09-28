@@ -39,6 +39,7 @@ public class CategoriaServicio implements CategoriaInterfazServicio {
         if(existente == null){
             Categoria categoria = new Categoria();
             categoria.setNombre(catdto.nombre());
+            categoria.setFechaCreacion(LocalDateTime.now());
             Categoria guardada = this.categoriaRepositorio.save(categoria);
             return mapToResponseDTO(guardada);
         } else throw new BusinessException("La categoria " + existente.getNombre() + " ya existe", 406);
@@ -167,13 +168,6 @@ public class CategoriaServicio implements CategoriaInterfazServicio {
                 throw new BusinessException("El producto " + nombreExistente.getNombre() + " ya existe", 409);
             existente.setNombre(categoria.nombre());
             existente.setFechaActualizacion(LocalDateTime.now());
-            if(categoria.activo() != existente.getActivo()){
-                existente.setActivo(!existente.getActivo());
-                if(!existente.getActivo()){
-                    String desactivar = desactivarCategoria(existente.getIdCategoria());
-                } else activarCategoria(existente.getIdCategoria());
-            }
-
             this.categoriaRepositorio.save(existente);
             return "Se ha modificado la categoria con exito";
         } else throw new BusinessException("No existe categoría con id " + categoria.id(), 404);
@@ -184,7 +178,6 @@ public class CategoriaServicio implements CategoriaInterfazServicio {
         return new CategoriaRespDTO(
                 categoria.getIdCategoria(),
                 categoria.getNombre(),
-                categoria.getActivo(),
                 categoria.getFechaCreacion(),
                 categoria.getFechaActualizacion(),
                 categoria.getProductos() == null ? List.of() :

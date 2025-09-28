@@ -33,6 +33,11 @@ dependencies {
     // Validación Jakarta
     implementation 'jakarta.validation:jakarta.validation-api:3.0.2'
 
+    // JJWT para manejar JWT
+    implementation 'io.jsonwebtoken:jjwt-api:0.11.5'
+    runtimeOnly 'io.jsonwebtoken:jjwt-impl:0.11.5'
+    runtimeOnly 'io.jsonwebtoken:jjwt-jackson:0.11.5' // para parsear JSON con Jackson
+
 	compileOnly 'org.projectlombok:lombok'
 	runtimeOnly 'com.microsoft.sqlserver:mssql-jdbc'
 	annotationProcessor 'org.projectlombok:lombok'

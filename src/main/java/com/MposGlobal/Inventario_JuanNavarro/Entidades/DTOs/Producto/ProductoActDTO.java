@@ -28,6 +28,7 @@ public record ProductoActDTO(
         @NotNull(message = "El precio es obligatorio")
         @Positive(message = "El precio debe ser mayor que 0")
         BigDecimal precio,
+
         Set<Integer> tagsIds
 ) {
 }

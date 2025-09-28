@@ -1,6 +1,8 @@
 package com.MposGlobal.Inventario_JuanNavarro.Entidades.Tablas;
 
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -11,6 +13,8 @@ import java.util.List;
 
 @Entity
 @Table(name = "usuarios")
+@Getter
+@Setter
 public class Usuario implements UserDetails {
 
     @Id
@@ -36,7 +40,6 @@ public class Usuario implements UserDetails {
     @Column(name = "fecha_ultimo_ingreso")
     private LocalDateTime fechaUltimoIngreso;
 
-    //@Enumerated(EnumType.STRING)
     @Column(name = "nivel_acceso", nullable = false, length = 20)
     private String nivelAcceso;
 
