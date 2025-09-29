@@ -86,9 +86,9 @@ public class UsuarioControlador {
 
     //desactivar usuario por username
     @PutMapping("/username/{username}/desactivar")
-    public ResponseEntity<?> desactivarUsuario(@Valid @PathVariable @NotBlank String nombreUsuario) throws BusinessException{
+    public ResponseEntity<?> desactivarUsuario(@Valid @PathVariable @NotBlank String username) throws BusinessException{
         try{
-            return ResponseEntity.status(HttpStatus.OK).body(this.usuarioServicio.desactivarUsuario(nombreUsuario));
+            return ResponseEntity.status(HttpStatus.OK).body(this.usuarioServicio.desactivarUsuario(username));
         }catch (BusinessException be){
             return ResponseEntity
                     .status(be.getStatus())
@@ -110,9 +110,9 @@ public class UsuarioControlador {
 
     //activar usuario por username
     @PutMapping("/username/{username}/activar")
-    public ResponseEntity<?> activarUsuario(@Valid @PathVariable @NotBlank String nombreUsuario) throws BusinessException{
+    public ResponseEntity<?> activarUsuario(@Valid @PathVariable @NotBlank String username) throws BusinessException{
         try{
-            return ResponseEntity.status(HttpStatus.OK).body(this.usuarioServicio.activarUsuario(nombreUsuario));
+            return ResponseEntity.status(HttpStatus.OK).body(this.usuarioServicio.activarUsuario(username));
         }catch (BusinessException be){
             return ResponseEntity
                     .status(be.getStatus())

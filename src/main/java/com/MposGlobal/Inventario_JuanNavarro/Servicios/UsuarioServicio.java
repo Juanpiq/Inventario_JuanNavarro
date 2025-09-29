@@ -36,7 +36,7 @@ public class UsuarioServicio implements UserDetailsService {
     //Crear usuario (solo puede el admin)
     public UsuarioRespDTO crearUsuario(UsuarioCrearDTO ucrearDto) throws BusinessException {
         Usuario uExistente = this.usuarioRepositorio.findByNombreUsuarioIgnoreCase(ucrearDto.nombreUsuario());
-        if (uExistente == null) {
+        if (uExistente != null) {
             throw new BusinessException("El nombre de usuario ya existe", 409);
         }
 
