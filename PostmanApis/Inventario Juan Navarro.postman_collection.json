@@ -1,0 +1,1404 @@
+{
+	"info": {
+		"_postman_id": "85cd7581-c4ac-4fc9-9559-7973a9bfdc92",
+		"name": "Inventario Juan Navarro",
+		"description": "### Welcome to Postman! This is your first collection. \n\nCollections are your starting point for building and testing APIs. You can use this one to:\n\n• Group related requests\n• Test your API in real-world scenarios\n• Document and share your requests\n\nUpdate the name and overview whenever you’re ready to make it yours.\n\n[Learn more about Postman Collections.](https://learning.postman.com/docs/collections/collections-overview/)",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "48803847",
+		"_collection_link": "https://juanpiq-1108704.postman.co/workspace/Juan-Navarro's-Workspace~1759de3f-d905-4f4f-8740-be381f205070/collection/48803847-85cd7581-c4ac-4fc9-9559-7973a9bfdc92?action=share&source=collection_link&creator=48803847"
+	},
+	"item": [
+		{
+			"name": "Login",
+			"item": [
+				{
+					"name": "Autenticacion",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"let data = pm.response.json();\r",
+									"pm.collectionVariables.set(\"token\", data.token);\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"nombreUsuario\": \"admin\",\r\n    \"clave\": \"admin123\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/auth/login",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"auth",
+								"login"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Usuarios",
+			"item": [
+				{
+					"name": "Gets",
+					"item": [
+						{
+							"name": "listar Usuarios",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "{{baseUrl}}/usuarios/",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"usuarios",
+										""
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "obtener por id",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "{{baseUrl}}/usuarios/id/1",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"usuarios",
+										"id",
+										"1"
+									],
+									"query": [
+										{
+											"key": "",
+											"value": null,
+											"disabled": true
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "obtener por username",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "{{baseUrl}}/usuarios/username/admin",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"usuarios",
+										"username",
+										"admin"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Post",
+					"item": [
+						{
+							"name": "Crear Usuario",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    //todos los atributos son estrictamente obligatorios\r\n    \"nombreCompleto\": \"Juan Navarro\",\r\n    \"nombreUsuario\": \"juanpi\",\r\n    \"clave\": \"juanpi123\",\r\n    \"nivelAcceso\": \"USER\"  //procura escribirlo todo en mayuscula\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/usuarios/crear",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"usuarios",
+										"crear"
+									],
+									"query": [
+										{
+											"key": "",
+											"value": null,
+											"disabled": true
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "PUTS",
+					"item": [
+						{
+							"name": "Activar Usuario",
+							"item": [
+								{
+									"name": "Activar usuario por id",
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "{{token}}",
+													"type": "string"
+												}
+											]
+										},
+										"method": "PUT",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    //todos los atributos son estrictamente obligatorios\r\n    \"id\": 2,\r\n    \"nombreCompleto\": \"Pablo Navarro\",\r\n    \"nombreUsuario\": \"juanpi1\",\r\n    \"clave\": \"juanpi123\",\r\n    \"nivelAcceso\": \"USER\"  //procura escribirlo todo en mayuscula\r\n}"
+										},
+										"url": {
+											"raw": "{{baseUrl}}/usuarios/id/2/activar",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"usuarios",
+												"id",
+												"2",
+												"activar"
+											],
+											"query": [
+												{
+													"key": "",
+													"value": null,
+													"disabled": true
+												}
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Activar usuario por username",
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "{{token}}",
+													"type": "string"
+												}
+											]
+										},
+										"method": "PUT",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    //todos los atributos son estrictamente obligatorios\r\n    \"id\": 2,\r\n    \"nombreCompleto\": \"Pablo Navarro\",\r\n    \"nombreUsuario\": \"juanpi1\",\r\n    \"clave\": \"juanpi123\",\r\n    \"nivelAcceso\": \"USER\"  //procura escribirlo todo en mayuscula\r\n}"
+										},
+										"url": {
+											"raw": "{{baseUrl}}/usuarios/username/juanpi1/activar",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"usuarios",
+												"username",
+												"juanpi1",
+												"activar"
+											],
+											"query": [
+												{
+													"key": "",
+													"value": null,
+													"disabled": true
+												}
+											]
+										}
+									},
+									"response": []
+								}
+							]
+						},
+						{
+							"name": "Desactivar Usuario",
+							"item": [
+								{
+									"name": "Desctivar usuario por id",
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "{{token}}",
+													"type": "string"
+												}
+											]
+										},
+										"method": "PUT",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    //todos los atributos son estrictamente obligatorios\r\n    \"id\": 2,\r\n    \"nombreCompleto\": \"Pablo Navarro\",\r\n    \"nombreUsuario\": \"juanpi1\",\r\n    \"clave\": \"juanpi123\",\r\n    \"nivelAcceso\": \"USER\"  //procura escribirlo todo en mayuscula\r\n}"
+										},
+										"url": {
+											"raw": "{{baseUrl}}/usuarios/id/2/desactivar",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"usuarios",
+												"id",
+												"2",
+												"desactivar"
+											],
+											"query": [
+												{
+													"key": "",
+													"value": null,
+													"disabled": true
+												}
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Desactivar usuario por username",
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "{{token}}",
+													"type": "string"
+												}
+											]
+										},
+										"method": "PUT",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    //todos los atributos son estrictamente obligatorios\r\n    \"id\": 2,\r\n    \"nombreCompleto\": \"Pablo Navarro\",\r\n    \"nombreUsuario\": \"juanpi1\",\r\n    \"clave\": \"juanpi123\",\r\n    \"nivelAcceso\": \"USER\"  //procura escribirlo todo en mayuscula\r\n}"
+										},
+										"url": {
+											"raw": "{{baseUrl}}/usuarios/username/juanpi1/desactivar",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"usuarios",
+												"username",
+												"juanpi1",
+												"desactivar"
+											],
+											"query": [
+												{
+													"key": "",
+													"value": null,
+													"disabled": true
+												}
+											]
+										}
+									},
+									"response": []
+								}
+							]
+						},
+						{
+							"name": "Actualizar usuario",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    //todos los atributos son estrictamente obligatorios\r\n    \"id\": 2,\r\n    \"nombreCompleto\": \"Pablo Navarro\",\r\n    \"nombreUsuario\": \"juanpi1\",\r\n    \"clave\": \"juanpi123\",\r\n    \"nivelAcceso\": \"USER\"  //procura escribirlo todo en mayuscula\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/usuarios/modificar",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"usuarios",
+										"modificar"
+									],
+									"query": [
+										{
+											"key": "",
+											"value": null,
+											"disabled": true
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Categorias",
+			"item": [
+				{
+					"name": "GETS",
+					"item": [
+						{
+							"name": "Lista de Categorias",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "{{baseUrl}}/categorias/",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"categorias",
+										""
+									],
+									"query": [
+										{
+											"key": "",
+											"value": null,
+											"disabled": true
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Categoria por id",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/categorias/id/1",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"categorias",
+										"id",
+										"1"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Categoria por nombre",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/categorias/nombre/Ropa",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"categorias",
+										"nombre",
+										"Ropa"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Productos de la categoria",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/categorias/id/1/productos",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"categorias",
+										"id",
+										"1",
+										"productos"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "PUTS",
+					"item": [
+						{
+							"name": "Activar Categorias",
+							"item": [
+								{
+									"name": "Activar por id",
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "{{token}}",
+													"type": "string"
+												}
+											]
+										},
+										"method": "PUT",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": ""
+										},
+										"url": {
+											"raw": "{{baseUrl}}/categorias/id/3/activar",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"categorias",
+												"id",
+												"3",
+												"activar"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Activar por nombre",
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "{{token}}",
+													"type": "string"
+												}
+											]
+										},
+										"method": "PUT",
+										"header": [],
+										"url": {
+											"raw": "{{baseUrl}}/categorias/nombre/Ropa%20Fina/activar",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"categorias",
+												"nombre",
+												"Ropa%20Fina",
+												"activar"
+											]
+										}
+									},
+									"response": []
+								}
+							]
+						},
+						{
+							"name": "Desctivar Categorias",
+							"item": [
+								{
+									"name": "Desactivar por id",
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "{{token}}",
+													"type": "string"
+												}
+											]
+										},
+										"method": "PUT",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": ""
+										},
+										"url": {
+											"raw": "{{baseUrl}}/categorias/id/3/desactivar",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"categorias",
+												"id",
+												"3",
+												"desactivar"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Desactivar por nombre",
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "{{token}}",
+													"type": "string"
+												}
+											]
+										},
+										"method": "PUT",
+										"header": [],
+										"url": {
+											"raw": "{{baseUrl}}/categorias/nombre/Ropa%20Fina/desactivar",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"categorias",
+												"nombre",
+												"Ropa%20Fina",
+												"desactivar"
+											]
+										}
+									},
+									"response": []
+								}
+							]
+						},
+						{
+							"name": "Actualizar Categoria",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    //todos los campos son obligatorios\r\n    \"id\": 2,\r\n    \"nombre\": \"Ropa Fina\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/categorias/modificar",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"categorias",
+										"modificar"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "POST",
+					"item": [
+						{
+							"name": "Crear Categorias",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"nombre\": \"Cosmeticos\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/categorias/crear",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"categorias",
+										"crear"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Tags",
+			"item": [
+				{
+					"name": "POST",
+					"item": [
+						{
+							"name": "Crear Tag",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"nombre\": \"Segunda mano\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/tags/crear",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"tags",
+										"crear"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "PUTS",
+					"item": [
+						{
+							"name": "Actualizar Tag",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    //todos los campos son obligatorios\r\n    \"idTag\": 4,\r\n    \"nombre\": \"Caducado\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/tags/modificar",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"tags",
+										"modificar"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "GETS",
+					"item": [
+						{
+							"name": "listar tags",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    //todos los campos son obligatorios\r\n    \"idTag\": 4,\r\n    \"nombre\": \"Caducado\"\r\n}"
+								},
+								"url": {
+									"raw": "{{baseUrl}}/tags/",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"tags",
+										""
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "buscar tag por id",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/tags/id/1",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"tags",
+										"id",
+										"1"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "buscar tag por nombre",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "{{baseUrl}}/tags/nombre/Nuevo",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"tags",
+										"nombre",
+										"Nuevo"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Productos",
+			"item": [
+				{
+					"name": "POSTS",
+					"item": [
+						{
+							"name": "Crear Producto",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    //todos los campos son obligatorios\r\n    \"nombre\": \"Lapiz labial\",\r\n    \"categoriaId\": 4,\r\n    \"costo\": 1.50, //colocar 2 decimales siempre y numeor positivo\r\n    \"precio\": 2.00, //colocar 2 decimales siempre y numeor positivo\r\n    \"tagsIds\": [1,4] //colocar los ids de los tags; este campo es opcional\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/productos/crear",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"productos",
+										"crear"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "GETS",
+					"item": [
+						{
+							"name": "listar prodcutos",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "{{baseUrl}}/productos/",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"productos",
+										""
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "buscar producto por id",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "{{baseUrl}}/productos/id/1",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"productos",
+										"id",
+										"1"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "buscar producto por nombre",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "{{baseUrl}}/productos/nombre/Smatphone",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"productos",
+										"nombre",
+										"Smatphone"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "PUTS",
+					"item": [
+						{
+							"name": "Activar Productos",
+							"item": [
+								{
+									"name": "activar por id",
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "{{token}}",
+													"type": "string"
+												}
+											]
+										},
+										"method": "PUT",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    //todos los campos son obligatorios\r\n    \"id\": 4,\r\n    \"nombre\": \"Crema\",\r\n    \"categoriaId\": 4,\r\n    \"costo\": 1.75,\r\n    \"precio\": 2.50,\r\n    \"tagsIds\": [1] //si no colocas este campo, sobreescribiras los tags a ninguno afiliado a este producto\r\n}"
+										},
+										"url": {
+											"raw": "{{baseUrl}}/productos/id/4/activar",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"productos",
+												"id",
+												"4",
+												"activar"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "activar por nombre",
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "{{token}}",
+													"type": "string"
+												}
+											]
+										},
+										"method": "PUT",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    //todos los campos son obligatorios\r\n    \"id\": 4,\r\n    \"nombre\": \"Crema\",\r\n    \"categoriaId\": 4,\r\n    \"costo\": 1.75,\r\n    \"precio\": 2.50,\r\n    \"tagsIds\": [1] //si no colocas este campo, sobreescribiras los tags a ninguno afiliado a este producto\r\n}"
+										},
+										"url": {
+											"raw": "{{baseUrl}}/productos/nombre/Camiseta/activar",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"productos",
+												"nombre",
+												"Camiseta",
+												"activar"
+											]
+										}
+									},
+									"response": []
+								}
+							]
+						},
+						{
+							"name": "Desactivar Productos",
+							"item": [
+								{
+									"name": "desactivar por id",
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "{{token}}",
+													"type": "string"
+												}
+											]
+										},
+										"method": "PUT",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    //todos los campos son obligatorios\r\n    \"id\": 4,\r\n    \"nombre\": \"Crema\",\r\n    \"categoriaId\": 4,\r\n    \"costo\": 1.75,\r\n    \"precio\": 2.50,\r\n    \"tagsIds\": [1] //si no colocas este campo, sobreescribiras los tags a ninguno afiliado a este producto\r\n}"
+										},
+										"url": {
+											"raw": "{{baseUrl}}/productos/id/2/desactivar",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"productos",
+												"id",
+												"2",
+												"desactivar"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "desactivar por nombre",
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "{{token}}",
+													"type": "string"
+												}
+											]
+										},
+										"method": "PUT",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    //todos los campos son obligatorios\r\n    \"id\": 4,\r\n    \"nombre\": \"Crema\",\r\n    \"categoriaId\": 4,\r\n    \"costo\": 1.75,\r\n    \"precio\": 2.50,\r\n    \"tagsIds\": [1] //si no colocas este campo, sobreescribiras los tags a ninguno afiliado a este producto\r\n}"
+										},
+										"url": {
+											"raw": "{{baseUrl}}/productos/nombre/Crema/desactivar",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"productos",
+												"nombre",
+												"Crema",
+												"desactivar"
+											]
+										}
+									},
+									"response": []
+								}
+							]
+						},
+						{
+							"name": "Actualizar producto",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    //todos los campos son obligatorios\r\n    \"id\": 4,\r\n    \"nombre\": \"Crema\",\r\n    \"categoriaId\": 4,\r\n    \"costo\": 1.75,\r\n    \"precio\": 2.50,\r\n    \"tagsIds\": [1] //si no colocas este campo, sobreescribiras los tags a ninguno afiliado a este producto\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/productos/modificar",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"productos",
+										"modificar"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"requests": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"requests": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "baseUrl",
+			"value": ""
+		},
+		{
+			"key": "token",
+			"value": ""
+		}
+	]
+}
