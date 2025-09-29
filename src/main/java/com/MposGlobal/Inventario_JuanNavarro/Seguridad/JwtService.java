@@ -12,7 +12,7 @@ import java.util.Map;
 
 @Service
 public class JwtService {
-    // Clave secreta, debe ser al menos 256 bits (32 bytes)
+    // Clave secreta
     private static final String SECRET = "MposGlobalKeyMposGlobalKey123456";
 
     // Tiempo de expiración: 10 minutos
