@@ -53,6 +53,8 @@ public class ProductoServicio implements ProductoInterfazServicio {
                     prod = new Producto();
                     prod.setNombre(productoCrearDTO.nombre());
                     prod.setCategoria(existente);
+                    prod.setCosto(productoCrearDTO.costo());
+                    prod.setPrecio(productoCrearDTO.precio());
                     prod.setFechaCreacion(LocalDateTime.now());
 
                     if (productoCrearDTO.tagsIds() != null && !productoCrearDTO.tagsIds().isEmpty()) {
@@ -67,7 +69,7 @@ public class ProductoServicio implements ProductoInterfazServicio {
                     return mapToDTO(this.productoRepositorio.save(prod));
 
                 } else throw new BusinessException("La categoría con id" + existente.getIdCategoria() + " esta desactivada, activela antes si quiere asociar un producto", 409);
-            } else throw new BusinessException("La categoría con id " + existente.getIdCategoria() + " no existe.", 404);
+            } else throw new BusinessException("La categoría con id " + productoCrearDTO.categoriaId() + " no existe.", 404);
         } else throw new BusinessException("El producto " + prod.getNombre() + " ya existe", 409);
     }
 
@@ -124,7 +126,7 @@ public class ProductoServicio implements ProductoInterfazServicio {
                     prod.setActivo(true);
                     this.productoRepositorio.save(prod);
                     return "Se ha activado la el producto " + prod.getNombre() + " exitosamente";
-                } else throw new BusinessException("El producto " + prod.getNombre() + " ya estaba desactivado", 406);
+                } else throw new BusinessException("El producto " + prod.getNombre() + " ya estaba activado", 406);
             } else throw new BusinessException("El producto " + prod.getNombre() + " no se puede activar ya que su categoria está desactivada", 409);
         } else throw new BusinessException("El producto " + nombre + " no existe", 404);
     }
@@ -184,7 +186,7 @@ public class ProductoServicio implements ProductoInterfazServicio {
 
         // Guardar y retornar DTO
         Producto actualizado = this.productoRepositorio.save(producto);
-        return "mapToDTO(actualizado)";
+        return "Producto actualizado con exito";
     }
 
     // Mapper para ProductoRespDTO

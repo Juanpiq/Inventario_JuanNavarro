@@ -12,12 +12,14 @@ import jakarta.validation.constraints.NotBlank;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
 @RequestMapping("/tags")
+@Validated
 public class TagControlador {
 
     @Autowired
@@ -61,7 +63,7 @@ public class TagControlador {
     public ResponseEntity<?> crearTag(@RequestBody @Valid TagCrearDTO tag) throws BusinessException{
         try{
             TagRespDTO tagdto = this.tagServicio.crearTag(tag.nombre());
-            return ResponseEntity.status(HttpStatus.CREATED).body(tag);
+            return ResponseEntity.status(HttpStatus.CREATED).body(tagdto);
         }catch(BusinessException be){
             return ResponseEntity
                     .status(be.getStatus())

@@ -42,9 +42,11 @@ public class TagServicio implements TagInterfazServicio {
     @Override
     public TagRespDTO buscarTag(int id) throws BusinessException {
         Optional<Tag> tag = tagRepositorio.findById(id);
-        if(!tag.isEmpty()){
+        if(tag.isPresent()){
             return mapToResponseDTO(tag.get());
-        } else throw new BusinessException("El tag con id " + tag.get().getIdTag() + " no existe.", 404);
+        } else {
+            throw new BusinessException("El tag con id " + id + " no existe.", 404);
+        }
     }
 
     @Override

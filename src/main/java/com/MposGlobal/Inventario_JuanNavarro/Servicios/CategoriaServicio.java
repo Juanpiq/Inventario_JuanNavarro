@@ -164,8 +164,10 @@ public class CategoriaServicio implements CategoriaInterfazServicio {
 
         if(existente != null){
             Categoria nombreExistente = this.categoriaRepositorio.findByNombreIgnoreCase(categoria.nombre());
-            if(existente.getIdCategoria() != nombreExistente.getIdCategoria())
-                throw new BusinessException("El producto " + nombreExistente.getNombre() + " ya existe", 409);
+            // Si hay otra categoría con el mismo nombre y no es la misma categoría actual
+            if (nombreExistente != null && existente.getIdCategoria() != nombreExistente.getIdCategoria()) {
+                throw new BusinessException("La categoría " + nombreExistente.getNombre() + " ya existe", 409);
+            }
             existente.setNombre(categoria.nombre());
             existente.setFechaActualizacion(LocalDateTime.now());
             this.categoriaRepositorio.save(existente);

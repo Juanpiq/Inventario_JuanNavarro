@@ -11,9 +11,6 @@ public record CategoriaActDTO(
 
         @NotBlank(message = "El nombre es obligatorio")
         @Size(max = 100, message = "El nombre no puede superar 100 caracteres")
-        String nombre,
-
-        @NotNull(message = "El campo activo es obligatorio y no puede ser nulo")
-        Boolean activo
+        String nombre
 ) {
 }

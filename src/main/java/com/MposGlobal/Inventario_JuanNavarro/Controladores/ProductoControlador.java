@@ -11,12 +11,14 @@ import jakarta.validation.constraints.NotBlank;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
 @RequestMapping("/productos")
+@Validated
 public class ProductoControlador {
 
     @Autowired
@@ -99,7 +101,7 @@ public class ProductoControlador {
     @PutMapping("/id/{id}/activar")
     public ResponseEntity<?> activarProducto(@PathVariable @Min(1) int id) throws BusinessException{
         try{
-            return ResponseEntity.status(HttpStatus.OK).body(this.productoServicio.desactivarProducto(id));
+            return ResponseEntity.status(HttpStatus.OK).body(this.productoServicio.activarProducto(id));
         }catch(BusinessException be){
             return ResponseEntity
                     .status(be.getStatus())
@@ -111,7 +113,7 @@ public class ProductoControlador {
     @PutMapping("/nombre/{nombre}/activar")
     public ResponseEntity<?> activarProducto(@PathVariable @NotBlank String nombre) throws BusinessException{
         try{
-            return ResponseEntity.status(HttpStatus.OK).body(this.productoServicio.desactivarProducto(nombre));
+            return ResponseEntity.status(HttpStatus.OK).body(this.productoServicio.activarProducto(nombre));
         }catch(BusinessException be){
             return ResponseEntity
                     .status(be.getStatus())
